@@ -1,0 +1,415 @@
+{% extends request_user_role_product_layout_view %}
+{% load static %}
+{% block title %} Products {% endblock %}
+{% block hscripts %}
+    <style>
+        body {
+            background-image: url("https://www.sapogo.com/Upload/Article/2021/7/8dd8cd62616094085aa9206d76799fcb.jpg");
+        }
+
+        .tab-content {
+            margin-left: 14px;
+        }
+
+        .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+            background-color: #09b223 !important;
+        }
+
+        .cards-container {
+            width: 100%;
+            margin: 0 auto;
+            padding-top: 20px;
+        }
+
+        .card {
+            background-color: #fff;
+            box-shadow: 10px 10px 40px 2px rgba(128, 128, 128, 0.4);
+            display: inline-block;
+            width: 270px;
+            border-radius: 10px;
+        }
+
+        .card .card-media {
+        {#            background-image: url(https://images.unsplash.com/photo-1615719413546-198b25453f85?crop=entropy&cs=srgb&fm=jpg&ixid=MnwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHx8MTYzMDQwMjkwNA&ixlib=rb-1.2.1&q=85);#} background-position: center;
+            background-size: cover;
+            height: 200px;
+            width: 100%;
+            object-fit: fit;
+            border-radius: 10px 10px 0 0;
+            position: relative;
+        }
+
+        .card .card-media .discount {
+            font-size: 12px;
+            background-color: #3582ec;
+            position: absolute;
+            bottom: 21%;
+            padding: 2px 5px 2px 20px;
+            border-radius: 0 4px 4px 0;
+            max-width: 60px;
+            left: 0;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .card .card-media .discount p {
+            font-weight: 400;
+        }
+
+        .card .card-media .pro-discount {
+            font-size: 12px;
+            background-color: #e83940;
+            position: absolute;
+            bottom: 6%;
+            padding: 3px 5px;
+            border-radius: 0 4px 4px 0;
+            max-width: 110px;
+            left: 0;
+            color: #fff;
+        }
+
+        .card .card-media .delivery-time {
+            position: absolute;
+            background-color: #f5f5f5;
+            max-width: 60px;
+            padding: 3px 6px;
+            font-size: 12px;
+            right: 3%;
+            bottom: 6%;
+            border-radius: 4px;
+        }
+
+        .card .card-description {
+            padding: 10px;
+        }
+
+        .card .card-description .about-place {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card .card-description .about-place .place-name {
+            font-weight: 600;
+            padding-bottom: 10px;
+            color: rgba(0, 0, 0, 0.87);
+        }
+
+        .card .card-description .about-place .place-speciality, .card .card-description .about-place .per-person {
+            font-size: 14px;
+            color: rgba(128, 128, 128, 0.97);
+        }
+
+        .card .card-description .about-place .rating {
+            font-size: 14px;
+            border-radius: 4px;
+            background-color: #0a6d0acc;
+            color: #fff;
+            font-weight: 700;
+            text-align: center;
+            padding: 2px 0;
+            margin-bottom: 6px;
+            margin-left: 30px;
+        }
+
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 100% !important;
+            }
+        }
+
+        .nav-pills .nav-link {
+            border-radius: 0.25rem;
+            color: white !important;
+        }
+
+        .nav-item {
+            padding: 8px;
+        }
+
+        @media (min-width: 576px) {
+            .modal-dialog {
+                max-width: 100% !important;
+                margin: 30px auto;
+            }
+        }
+
+        .cart_details {
+            padding: 6px;
+            border: 1px solid black;
+            margin-left: 1px;
+            border-radius: 5px;
+        }
+
+        .text-color {
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 11px;
+        }
+
+        .cart_details h5 {
+            font-size: 10px !important;
+        }
+
+        .search {
+            width: 100%;
+            position: relative;
+            display: flex;
+        }
+
+        .searchTerm {
+            width: 100%;
+            border: 3px solid #09b223;
+            border-right: none;
+            padding: 5px;
+            height: 20px;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+            color: #9DBFAF;
+        }
+
+        .searchTerm:focus {
+            color: #09b223;
+        }
+
+        .searchButton {
+            width: 40px;
+            height: 36px;
+            border: 1px solid #09b223;
+            background: #09b223;
+            text-align: center;
+            color: #fff;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        /*Resize the wrap to see the search bar change!*/
+        .wrap {
+            width: 30%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .order_summary_table th {
+            width: 200px !important;
+        }
+
+        .payment_card {
+            height: 150px !important;
+            padding: 11px !important;
+            box-shadow: 0 4px 16px 0 rgba(167, 175, 183, 0.33);
+            margin-left: 1px;
+        }
+
+        .payment_icons {
+            padding: 20px;
+            cursor: pointer;
+        }
+
+        .payment_icons:hover {
+            opacity: 0.5;
+            -ms-transform: scale(1.5); /* IE 9 */
+            -webkit-transform: scale(1.5); /* Safari 3-8 */
+            transform: scale(1.0);
+        }
+    </style>
+{% endblock %}
+
+{% block main %}
+    <div class="content-wrapper">
+
+        <div class="container mt-2">
+            <div class="container-fluid">
+                <ul class="nav nav-pills nav-justified" style="margin-top: 33px; background: black; border-radius: 3px">
+                    <li class="nav-item">
+                        <a class="nav-link active grocery" id="1" href="#subscribed" data-toggle="tab">Grocery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link food" href="#eventPassed" id="2" data-toggle="tab">Food</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link cloth" href="#eventNow" id="3" data-toggle="tab">Cloth</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link footware" href="#eventIncoming" id="4" data-toggle="tab">Footware</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link cosmetics" href="#eventCreation" id="5" data-toggle="tab">Cosmetics</a>
+                    </li>
+                </ul>
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-8">
+                        <div class="search mt-2">
+                            <input type="text" class="searchTerm" placeholder="What are you looking for?"
+                                   style="height: 36px; width: 800px;">
+                            <button type="submit" class="searchButton">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <!-- Pills content -->
+        <div class="tab-content" id="ex2-content">
+            <div class="tab-pane fade show active" id="subscribed" role="tabpanel" aria-labelledby="ex3-tab-1">
+                <!--  Styles  -->
+                <div class="cards-container">
+                    <div class="row grocery_list">
+
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="eventPassed" role="tabpanel" aria-labelledby="ex3-tab-2">
+                <div class="cards-container">
+                    <div class="row food_list">
+
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="eventNow" role="tabpanel" aria-labelledby="ex3-tab-3">
+                <div class="cards-container">
+                    <div class="row cloth_list">
+
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="eventIncoming" role="tabpanel" aria-labelledby="ex3-tab-3">
+                <div class="cards-container">
+                    <div class="row footware_list">
+
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="eventCreation" role="tabpanel" aria-labelledby="ex3-tab-3">
+                <div class="cards-container">
+                    <div class="row cosmetics_list">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal modal-fullscreen-xl product-modal" id="modal-fullscreen-xl" tabindex="-1" role="dialog"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <input type="hidden" id="odr_hidden_id" value="-">
+            <div class="modal-content ml-2" style="padding: 17px;">
+                <div class="modal-header">
+                    <h5 class="modal-title shop-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="row">
+                            <div class="col-8 ml-5 "
+                                 style="box-shadow: 0 4px 16px 0 rgba(167, 175, 183, 0.33);height: 377px; overflow: scroll;">
+                                <div id="shop" class="row">
+
+                                </div>
+                            </div>
+                            <div class="col-3 ml-5 cart_product_card"
+                                 style="box-shadow: 0 4px 16px 0 rgba(167, 175, 183, 0.33); height: 377px; overflow: scroll;">
+                                <div id="added_cart" class="row" style="padding: 10px;">
+
+                                </div>
+                            </div>
+                            <div class="col-3 ml-5 d-none cart_checkout_card"
+                                 style="box-shadow: 0 4px 16px 0 rgba(167, 175, 183, 0.33); height: 377px; overflow: scroll;">
+                                <div id="checkout_card" class="row" style="padding: 10px;">
+                                    <div class="row col-12" style="margin-left: 0px;">
+                                        <div class="col-12">
+                                            <p><i class="fa fa-chevron-left p-2" style="cursor: pointer;"></i></p>
+                                        </div>
+                                    </div>
+                                    <div class="row col-12">
+                                        <div class="col-lg-12">
+                                            <table style="width:100%" class="order_summary_table">
+                                                <tr>
+                                                    <th><b><u>Order Summery</u></b></th>
+                                                    <td></td>
+                                                </tr>
+                                                <tr class="mt-2">
+                                                    <th><strong><em>Total Item's Amount :</em></strong></th>
+                                                    <td></td>
+                                                    <td class="total_item_amount"><strong><em>200</em></strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <th><strong><em>CGST :</em></strong></th>
+                                                    <td></td>
+                                                    <td class="cgst"><strong><em>3</em></strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <th><strong><em>IGST:</em></strong></th>
+                                                    <td></td>
+                                                    <td class="igst"><strong><em>5</em></strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <th><strong><em>Delivery :</em></strong></th>
+                                                    <td></td>
+                                                    <td class="delivery_charge"><strong><em>40</em></strong></td>
+                                                </tr>
+                                            </table>
+                                            <hr class="summery_hr">
+                                            <table style="width:100%" class="mt-4 order_summary_table">
+                                                <tr class="mt-2">
+                                                    <th><strong><em>Total Amount to Pay</em></strong></th>
+                                                    <td></td>
+                                                    <td class="total_amount"></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="payment_card row col-12 mt-3">
+                                        <div class="col-lg-12">
+                                            <p><em><b><u>Delivery Address</u></b></em></p>
+                                            <p><span><i class="fa fa-map-marker"></i><strong><em>15th Main Road | 2nd Phase | JP Nagar | Karnataka | India</em></strong> </span>
+                                            </p>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for=""><b>Selct Payment Mode</b></label>
+                                            <select type="select" class="form-control" id="payment_mode">
+                                                <option value="">Select Payment Mode</option>
+                                                <option value="Online">Online</option>
+                                                <option value="COD">Cash On Delivery</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success check_out">Checkout</button>
+                    <button type="button" class="btn btn-success paynow d-none">Pay</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block fscripts %}
+    <script src="{% static '/assets/code/js/products.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            $('nav a').click(function () {
+                $('nav a').removeClass("active");
+                $(this).addClass("active");
+            });
+        });
+    </script>
+{% endblock %}
+

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    {% load static %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+
+    <title>{% block title %}{% endblock %}</title>
+
+    <link rel="stylesheet"
+          href="{% static 'assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css' %}?{{ version }}">
+    <link rel="stylesheet" href="{% static '/assets/vendors/iconfonts/ionicons/css/ionicons.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/vendors/iconfonts/typicons/src/font/typicons.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/vendors/iconfonts/flag-icon-css/css/flag-icon.min.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/vendors/css/vendor.bundle.base.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/vendors/css/vendor.bundle.addons.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/shared/style.css' %}?{{ version }}">
+    <link rel="stylesheet" href="{% static '/assets/css/demo_1/style.css' %}?{{ version }}">
+    <link rel="stylesheet" href="{% static '/assets/code/css/style.css' %}?{{ version }}">
+    <link rel="stylesheet" href="{% static '/assets/code/css/responsive.css' %}?{{ version }}">
+    <link rel="shortcut icon" href="{% static '/assets/images/logo.jpeg' %}"/>
+    <link rel="stylesheet" href="{% static '/assets/vendors/iconfonts/font-awesome/css/font-awesome.min.css' %}"/>
+    <link rel="stylesheet" href="{% static '/assets/index/css/bootstrap-datepicker.css' %}"/>
+    <link rel="stylesheet" href="{% static '/assets/index/css/bootstrap-datepicker.min.css' %}"/>
+    <link rel="stylesheet" href="{% static '/DataTable/datatables.css' %}"/>
+    <style>
+        .sidebar {
+            background: linear-gradient(to top, #246522, #035200) !important
+        }
+
+        .overlay {
+            background: #00000014;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            width: 74%;
+            height: 73%;
+            opacity: 0;
+            visibility: hidden;
+            -webkit-transition: all 0.2s ease-in-out;
+            -o-transition: all 0.2s ease-in-out;
+            transition: all 0.2s ease-in-out;
+            display: inline-block;
+        }
+
+        .overlay.is-on {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .overlay.is-on .content {
+            opacity: 1;
+            visibility: visible;
+            top: 0;
+            box-shadow: 0 0 6px 0 rgba(0, 0, 0, .5);
+            overflow: scroll;
+        }
+
+        .overlay .content {
+            background: #fff;
+            position: absolute;
+            top: -50%;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            width: 50%;
+            height: 80%;
+            opacity: 0;
+            visibility: hidden;
+            -webkit-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+
+        #close-popup {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 15px;
+            color: #999;
+            cursor: pointer;
+        }
+
+        .open-button {
+            background-color: #555;
+            color: white;
+            padding: 16px 20px;
+            border: none;
+            cursor: pointer;
+            opacity: 0.8;
+            position: fixed;
+            bottom: 23px;
+            right: 28px;
+            width: 280px;
+        }
+
+        /* The popup chat - hidden by default */
+        .chat-popup {
+            display: none;
+            position: fixed;
+            bottom: 58px;
+            right: 32px;
+            border: 3px solid #f1f1f1;
+            z-index: 9;
+            background: #ffffff;
+
+        }
+
+        /* Add styles to the form container */
+        .form-container {
+            max-width: 300px;
+            padding: 10px;
+            background-color: white;
+        }
+
+        /* Full-width textarea */
+        .form-container textarea {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            border: none;
+            background: #f1f1f1;
+            resize: none;
+            min-height: 200px;
+        }
+
+        /* When the textarea gets focus, do something */
+        .form-container textarea:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+
+        /* Set a style for the submit/send button */
+        .form-container .btn {
+            background-color: #04AA6D;
+            color: white;
+            padding: 16px 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 10px;
+            opacity: 0.8;
+        }
+
+        /* Add a red background color to the cancel button */
+        .form-container .cancel {
+            background-color: red;
+        }
+
+        /* Add some hover effects to buttons */
+        .form-container .btn:hover, .open-button:hover {
+            opacity: 1;
+        }
+
+        #chatbot-container {
+            width: 100%;
+            height: 250px;
+            margin: 10px auto;
+            padding: 10px 5px;
+            overflow-y: auto;
+            background: #ffffff;
+            display: flex;
+            display: -ms-flexbox;
+            display: inline-flex;
+            display: -webkit-flex;
+            flex-direction: column;
+            border-radius: 10px;
+        }
+
+        .speech::first-letter,
+        .recorder::first-letter {
+
+            text-transform: capitalize;
+
+        }
+
+        #chatbot-container .recorder {
+
+            color: #fff;
+
+            background: #78f;
+
+            border-radius: 5px;
+
+            padding: 8px;
+
+            margin: 4px 0;
+
+            max-width: 250px;
+
+            align-self: flex-start;
+
+            flex-shrink: 0;
+
+        }
+
+        #chatbot-container .speech {
+
+            color: #fff;
+
+            background: #1c8;
+
+            border-radius: 5px;
+
+            padding: 8px;
+
+            margin: 4px 0;
+
+            flex-shrink: 0;
+
+            align-self: flex-end;
+
+            max-width: 250px;
+
+        }
+
+        button {
+
+            border: none;
+
+            outline: none;
+
+            background: none;
+
+        }
+
+        .fa-telegram-plane {
+
+            font-size: 36px;
+
+            width: 15%;
+
+            padding: 8px 12px;
+
+            line-height: 30px;
+
+            cursor: pointer;
+
+            display: inline-block;
+
+        }
+
+        .fa-telegram-plane:hover {
+
+            color: #78f;
+
+        }
+
+        #btn {
+
+            background: #78f;
+
+            color: whiteSmoke;
+
+            padding: 10px 25px;
+
+            font-size: 22px;
+
+            font-weight: 600;
+
+            display: block;
+
+            box-shadow: 0 3px 10px #a7f;
+
+            margin: 0 auto;
+
+            transition: 0.5s;
+
+        }
+
+        #btn:hover {
+
+            padding-right: 30px;
+
+            background: #6a7;
+
+            transition: 0.5s;
+
+        }
+
+        #form {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        #form #botvalue {
+
+            padding: 8px 10px;
+            border-radius: 6px;
+            outline: none;
+            width: calc(96% - 14%);
+            line-height: 30px;
+            border: 1px solid #555;
+            font-size: 17px;
+            font-weight: normal;
+            height: 30px;
+
+        }
+
+        .open-button {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: transparent;
+            opacity: 1;
+            margin-right: 22px;
+        }
+
+        .main-panel {
+            width: calc(100% - 0px) !important;
+            min-height: calc(100vh - 0px) !important;
+        }
+    </style>
+    {% block hscripts %}
+
+    {% endblock %}
+</head>
+<body>
+{# <input type="hidden" id="backoffice_member_list_user_id" value="{{ u_id | default : "1" }}">#}
+<div class="container-scroller">
+    <input type="hidden" id="backoffice_member_list_user_id" value="{{ u_id }}">
+    <input type="hidden" id="backoffice_session" value="{{ u_id }}">
+    <script>
+        function preventBack() {
+            window.history.forward();
+        }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () {
+            null
+        };
+    </script>
+
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+            <a class="navbar-brand brand-logo" href="#">
+                <img src="{% static '/assets/logo/logo1.png' %}" alt="logo"/>
+                {#<h4>masloc</h4>#}</a>
+            <a class="navbar-brand brand-logo-mini" href="/">
+                <img src="{% static '/assets/logo/logo1.png' %}" alt="logo"/> </a>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-center">
+            <ul class="navbar-nav">
+                <li class="nav-item font-weight-semibold d-none d-lg-block" style="line-height: 0.3;"><p>Help : <a
+                        href="https://api.whatsapp.com/send?phone=%2B2332050552098" target="_blank">+91 9337287480</a>
+                </p>
+                    <p>Mail : <a href="mailto:jbhanja09@gmail.com">jbhanja09@gmail.com</a></p></li>
+                <li class="nav-item dropdown language-dropdown">
+                    <a class="nav-link dropdown-toggle px-2 d-flex align-items-center" id="LanguageDropdown" href="#"
+                       data-toggle="dropdown" aria-expanded="false">
+                        <span class="profile-text font-weight-medium d-none d-md-block">English</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-left navbar-dropdown py-2"
+                         aria-labelledby="LanguageDropdown">
+                        <a class="dropdown-item">
+                            English
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <form class="ml-auto search-form d-none d-md-block" action="#">
+                <div class="form-group">
+                    <input type="search" class="form-control d-none" placeholder="Search Here">
+                </div>
+            </form>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown d-xl-inline-block user-dropdown">
+                    <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown"
+                       aria-expanded="false">
+                        <img class="img-xs rounded-circle profile-image" alt="Profile image" src=""> </a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+                        <div class="dropdown-header text-center profile-image">
+                            <img class="img-md rounded-circle profile-image" alt="Profile image"
+                                 src="">
+
+                            <p class="mb-1 mt-3 font-weight-semibold"><span id="b_user_name"></span></p>
+                            <p class="font-weight-light text-muted mb-0"><span id="b_user_email"></span></p>
+                        </div>
+
+                        <a class="dropdown-item" href="/profile/">Profile<i
+                                class="dropdown-item-icon ti-comment-alt"></i></a>
+                        <a class="dropdown-item all_messages">Messages<i class="dropdown-item-icon ti-comment-alt"></i></a>
+                        <a class="dropdown-item" id="logOut" href="/">Sign Out<i
+                                class="dropdown-item-icon ti-power-off"></i></a>
+                    </div>
+                </li>
+            </ul>
+            <div class="overlay">
+                <div class="content">
+                    <div id="close-popup"><i class="fa fa-times" aria-hidden="true"></i></div>
+                    <div class="chat">
+
+                    </div>
+                </div>
+            </div>
+            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                    data-toggle="offcanvas">
+                <span class="mdi mdi-menu"></span>
+            </button>
+        </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        <div class="main-panel">
+            {% block main %}
+            {% endblock %}
+            <footer class="footer">
+                <div class="container-fluid clearfix">
+                    <span class="text-muted d-block text-center text-sm-left d-sm-inline-block float-right">Copyright © 2023<a
+                            href="https://www.membersapp.net/"
+                            target="_blank">MyDelivery</a>. All rights reserved.</span>
+                </div>
+            </footer>
+        </div>
+
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="{% static '/assets/vendors/js/vendor.bundle.base.js' %}"></script>
+<script src="{% static '/assets/vendors/js/vendor.bundle.addons.js' %}"></script>
+<script src="{% static '/assets/js/shared/off-canvas.js' %}"></script>
+<script src="{% static '/assets/js/shared/misc.js' %}"></script>
+<script src="{% static '/assets/js/sweetalert.min.js' %}"></script>
+<script src="{% static '/assets/index/js/moment.min.js' %}"></script>
+<script src="{% static '/assets/index/js/bootstrap-datepicker.js' %}"></script>
+<script src="{% static '/assets/index/js/bootstrap-datepicker.min.js' %}"></script>
+<script src="{% static '/DataTable/datatables.js' %}"></script>
+<script src="{% static '/assets/code/js/productbackoffice.js' %}"></script>
+
+
+{% block fscripts %}
+
+{% endblock %}
+</body>
+</html>

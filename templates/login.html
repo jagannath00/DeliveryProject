@@ -1,0 +1,259 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}Delivery{% endblock %}</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="{% static '/assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/vendors/iconfonts/ionicons/css/ionicons.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/vendors/iconfonts/typicons/src/font/typicons.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/vendors/iconfonts/flag-icon-css/css/flag-icon.min.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/vendors/css/vendor.bundle.base.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/vendors/css/vendor.bundle.addons.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="{% static '/assets/css/shared/style.css' %}">
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="{% static '/assets/css/demo_1/style.css' %}">
+
+    <!-- End Layout styles -->
+    <link rel="shortcut icon" href="{% static '/assets/logo/logo.png' %}"/>
+
+    <style>
+        body {
+            background-image: url('https://wallpaperaccess.com/full/438099.jpg');
+            background-size: cover;
+            background-position-y: center;
+            background-repeat: no-repeat;
+
+        }
+
+        .login_form {
+            height: 90vh;
+            background: rgb(255, 255, 255);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 1) 23%, rgba(247, 255, 238, 1) 81%, rgba(242, 255, 225, 1) 100%);
+            border-radius: 0 0 50px 0;
+            padding: 60px 50px;
+            box-shadow: 5px 5px 10px #4d4d4d30, -5px -5px 10px #45454530;
+        }
+
+        .login_form h5 {
+            text-align: center;
+            color: #00885a;
+            font-size: 40px;
+            letter-spacing: 3px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .login_form .form-control {
+            background-color: rgba(255, 255, 255, 0) !important;
+            border: 0.5px solid #00885b6e;
+            border-radius: 18px;
+        }
+
+        .forget_password {
+            color: #00885a;
+            font-size: 14px;
+        }
+
+        .forget_password a {
+            text-decoration: none;
+            color: #00885a;
+        }
+
+        .forget_password span {
+            float: right;
+        }
+
+        .login_email_input label,
+        .login_password_input label {
+            color: #00885a;
+            font-weight: 600;
+        }
+
+        .login_email_input,
+        .login_password_input {
+            margin-bottom: 12px;
+        }
+
+        .login_button {
+            width: 100%;
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .login_button .login_button {
+            width: 100%;
+            border-radius: 26px;
+            font-size: 18px;
+            padding: 6px 26px;
+            background-color: #00885a;
+            color: #ffffff;
+        }
+
+        .login_button .login_button:hover {
+            background-color: #026141;
+            color: #ffffff;
+        }
+
+        .user_buttons {
+            margin-bottom: 40px !important;
+        }
+
+        .user_buttons div .user_button {
+            padding: 0 auto;
+            background-color: #ffffff;
+            color: #00885a;
+
+        }
+
+        .user_login, .admin_login {
+            display: none;
+        }
+
+        .active {
+            display: block !important;
+        }
+
+        .active_button {
+            border-bottom: 1px solid #00885b8f !important;
+        }
+
+        .title {
+            text-align: right;
+            padding-top: 30px;
+            padding-right: 40px;
+        }
+
+        .title h4 {
+            font-size: 29px;
+            opacity: 1;
+            color: #ffffff;
+        }
+
+        .title h5 {
+            font-size: 20px;
+            opacity: 1;
+            color: #ffffff;
+        }
+
+        .sidebar > .nav:not(.sub-menu) > .nav-item:hover:not(.nav-profile):not(.hover-open) > .nav-link:not([aria-expanded="true"]) {
+            background: #16d500 !important;
+            padding-left: 65px;
+        }
+
+    </style>
+    {% block hscripts %} {% endblock %}
+</head>
+
+<body>
+<div class="container-scroller">
+    <div class="container login_page">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="login_form">
+                    <h5>Login</h5>
+                    <div class="row user_buttons">
+                        <div class="col-6">
+                            <button type="button" class="btn user_button active_button" id="button1">User Login</button>
+                        </div>
+                        <div class="col-6">
+                            <button type="button" class="btn user_button" id="button2">Register</button>
+                        </div>
+                    </div>
+                    <div class="user_login active" id="div1">
+                        <div class="login_email_input">
+                            <label for="email" class="form-label">User ID</label>
+                            <input type="text" class="form-control" name="email" id="uname" placeholder="">
+                        </div>
+                        <div class="login_password_input">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password" id="upwd"
+                                   placeholder="">
+                        </div>
+                        <div class="forget_password">
+                            <input type="checkbox" id="showPasswordCheckbox" onchange="togglePasswordVisibility()"> Show
+                            Password
+                            <span><a href="#">Forget Password</a></span>
+                        </div>
+                        <div class="login_button">
+                            <button class="btn login_button login">Login</button>
+                        </div>
+                    </div>
+
+                    <div class="admin_login" id="div2">
+                        <div class="login_email_input">
+                            <label for="email" class="form-label">Admin ID</label>
+                            <input type="email" class="form-control" name="email" id="" placeholder="">
+                        </div>
+                        <div class="login_password_input">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password" id="" placeholder="">
+                        </div>
+                        <div class="login_button">
+                            <button class="btn login_button">Login</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="title">
+                    <h4>Need's In Wheel</h4>
+                    <h5>The All you need in just a click away.</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- container-scroller -->
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<!-- plugins:js -->
+<script src="{% static '/assets/code/js/login.js' %}"></script>
+
+<script src="{% static '/assets/vendors/js/vendor.bundle.base.js' %}"></script>
+<script src="{% static '/assets/vendors/js/vendor.bundle.addons.js' %}"></script>
+<script src="{% static '/assets/js/shared/off-canvas.js' %}"></script>
+<script src="{% static '/assets/js/shared/misc.js' %}"></script>
+<script type="text/javascript" src="{% static '/assets/js/sweetalert.min.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js"></script>
+<script>
+    var button1 = document.getElementById("button1");
+    var button2 = document.getElementById("button2");
+    var div1 = document.getElementById("div1");
+    var div2 = document.getElementById("div2");
+    button1.addEventListener("click", function () {
+        div1.classList.add("active");
+        div2.classList.remove("active");
+        button1.classList.add("active_button");
+        button2.classList.remove("active_button");
+    });
+    button2.addEventListener("click", function () {
+        div1.classList.remove("active");
+        div2.classList.add("active");
+        button1.classList.remove("active_button");
+        button2.classList.add("active_button");
+    });
+
+
+    function togglePasswordVisibility() {
+        var passwordInput = document.getElementById("passwordInput");
+        var showPasswordCheckbox = document.getElementById("showPasswordCheckbox");
+        passwordInput.type = showPasswordCheckbox.checked ? "text" : "password";
+    }
+</script>
+
+
+</body>
+
+</html>

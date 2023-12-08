@@ -1,0 +1,315 @@
+{% extends request_user_role_layout_view %}
+{% load static %}
+{% block title %} Profile {% endblock %}
+{% block hscripts %}
+    <style>
+        .profile_picture {
+            border: 1px solid;
+            border-radius: 50%;
+            height: 197px;
+        }
+
+        .user_details p {
+            padding: 5px;
+        }
+
+        .cards {
+            perspective: 600px;
+            position: relative;
+        }
+
+        .cards.is-switched .card__wrapper {
+            -webkit-animation: rotate 0.5s linear both;
+            animation: rotate 0.5s linear both;
+        }
+
+        .card__wrapper {
+            transform-style: preserve-3d;
+            -webkit-animation: rotate-inverse 0.5s linear both;
+            animation: rotate-inverse 0.5s linear both;
+        }
+
+        .card__side {
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        .card__side.is-active {
+            position: static;
+        }
+
+        .card__side--back {
+            transform: rotateY(180deg);
+        }
+
+        @-webkit-keyframes rotate {
+            0% {
+                transform: rotateY(0);
+            }
+            70% {
+                transform: rotateY(200deg);
+            }
+            100% {
+                transform: rotateY(180deg);
+            }
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotateY(0);
+            }
+            70% {
+                transform: rotateY(200deg);
+            }
+            100% {
+                transform: rotateY(180deg);
+            }
+        }
+
+        @-webkit-keyframes rotate-inverse {
+            0% {
+                transform: rotateY(180deg);
+            }
+            70% {
+                transform: rotateY(-20deg);
+            }
+            100% {
+                transform: rotateY(0);
+            }
+        }
+
+        @keyframes rotate-inverse {
+            0% {
+                transform: rotateY(180deg);
+            }
+            70% {
+                transform: rotateY(-20deg);
+            }
+            100% {
+                transform: rotateY(0);
+            }
+        }
+
+        .cards {
+            margin: 2rem auto;
+        }
+
+        .card__side {
+            padding: 1em;
+            border-radius: 5px;
+            color: #000000;
+        }
+
+        .money-wallet {
+            height: 125px;
+            background: black;
+            color: white;
+            width: auto;
+            padding: 18px;
+        }
+
+        .align-hr {
+            border-top: 1px solid #454545 !important;
+        }
+
+        .money-wallet p {
+            color: #ffffff;
+        }
+
+        .flip_card_margin_top {
+            margin-top: -9px;
+        }
+
+    </style>
+{% endblock %}
+
+{% block main %}
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-12">
+                <button id="f_btn" class="btn btn-sm btn-success float-right">Edit</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="profile_picture">
+                            <img class="main_profile_image" src="" alt="logo" height="200" width="200"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-2">
+                    <div class="card-body">
+                        <h5 style="text-align: center;"><b>Jagannath Bhanja</b></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-9">
+                <div class="cards js-card">
+                    <div class="card__wrapper">
+                        <div class="card__side is-active">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="wallet" style="height: 241px;">
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <div class="money-wallet">
+                                                    <span><strong> ₹ 119.00</strong></span>
+                                                    <span><strong><button type="button"
+                                                                          class="float-right btn btn-secondary btn-sm">Withdraw</button></strong></span>
+                                                    <hr class="align-hr mt-5">
+                                                    <p class="float-right"><strong>Jagannath</strong></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card__side card__side--back">
+                            <div class="card">
+                                <div class="card-body">
+                                    <p><i class="fa fa-chevron-left p-2" style="cursor: pointer;"></i></p>
+                                    <div class="user_form" style="height: 241px;">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <label for="u_name">Name</label>
+                                                <input type="text" class="form-control" id="u_name">
+                                            </div>
+                                            <div class="col-4">
+                                                <label for="u_dob">DOB</label>
+                                                <input type="date" class="form-control" id="u_dob">
+                                            </div>
+                                            <div class="col-4">
+                                                <label for="u_dob">Gender</label>
+                                                <select type="text" class="form-control" id="u_dob">
+                                                    <option value="">Select gender</option>
+                                                    <option value="Male">Male</option>
+                                                    <option value="FeMale">FeMale</option>
+                                                    <option value="Other">Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <label for="u_num">Number</label>
+                                                <input type="number" class="form-control" id="u_num">
+                                            </div>
+                                            <div class="col-4">
+                                                <label for="u_email">Email Id</label>
+                                                <input type="email" class="form-control" id="u_email">
+                                            </div>
+                                            <div class="col-4">
+                                                <label for="u_city">City</label>
+                                                <input type="text" class="form-control" id="u_city">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <label for="u_state">State</label>
+                                                <input type="text" class="form-control" id="u_state">
+                                            </div>
+                                            <div class="col-3">
+                                                <label for="u_country">Country</label>
+                                                <input type="text" class="form-control" id="u_country">
+                                            </div>
+                                            <div class="col-6">
+                                                <label for="u_profile_image" class="form-label">Profile Image</label>
+                                                <input class="form-control" type="file" id="u_profile_image">
+                                            </div>
+                                        </div>
+                                        <div class="row mt-5">
+                                            <div class="col-12">
+                                                <button type="button" class="btn btn-success btn-sm float-right"
+                                                        id="create_user">Create
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card" style="margin-top: -25px;">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4 user_details">
+                                <p><strong>Name :</strong> Jagannath</p>
+                            </div>
+                            <div class="col-4">
+                                <p><strong>DOB :</strong> 10th March 2002</p>
+                            </div>
+                            <div class="col-4">
+                                <p><strong>Gender :</strong> 10th March 2002</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <p><strong>Joined Date :</strong> 19th Jun 2023</p>
+                            </div>
+                            <div class="col-4">
+                                <p><strong>Mobile Num :</strong> +91 9337287480</p>
+                            </div>
+                            <div class="col-4">
+                                <p><strong>Email Id :</strong> jbhanja09@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <p><strong> City :</strong> Balasore</p>
+                            </div>
+                            <div class="col-4">
+                                <p><strong> State :</strong> Odisha</p>
+                            </div>
+                            <div class="col-4">
+                                <p><strong> Country :</strong> India</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block fscripts %}
+    <script src="{% static '/assets/code/js/profile.js' %}"></script>
+    <script>
+        var cardTransitionTime = 500;
+
+        var $card = $(".js-card");
+        var switching = false;
+
+        $("#f_btn").click(flipCard);
+        $(".fa-chevron-left").click(flipCard);
+
+        function flipCard() {
+            if (switching) {
+                return false;
+            }
+            switching = true;
+            if (switching = true) {
+                $("#f_btn").addClass("d-none");
+            }
+
+            $card.toggleClass("is-switched");
+            window.setTimeout(function () {
+                $card.children().children().toggleClass("is-active");
+                switching = false;
+            }, cardTransitionTime / 2);
+        }
+    </script>
+
+
+{% endblock %}
+

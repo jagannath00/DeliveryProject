@@ -1,0 +1,9 @@
+.idea/*
+logs/*
+*.pyc
+*.pyo
+.env
+media/*
+*.xml
+env.py
+MembersAppProject/environment.py
