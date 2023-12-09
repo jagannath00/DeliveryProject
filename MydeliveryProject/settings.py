@@ -94,16 +94,29 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': ma_databasename,
+#         'USER': ma_user,
+#         'PASSWORD': ma_password,
+#         'HOST': ma_host_name,
+#         'PORT': ma_port_no,
+#     },
+# }
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': ma_databasename,
-        'USER': ma_user,
-        'PASSWORD': ma_password,
-        'HOST': ma_host_name,
-        'PORT': ma_port_no,
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'DELIVERY',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
     },
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
