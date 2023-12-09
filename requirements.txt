@@ -20,6 +20,7 @@ idna==3.4
 infobip-api-python-sdk==1.0.0
 multidict==6.0.4
 mysql-connector-python==8.2.0
+mysqlclient==2.2.0
 numpy==1.26.0
 openpyxl==3.1.2
 packaging==23.1
@@ -37,6 +38,7 @@ PyMySQL==1.1.0
 pyotp==2.9.0
 pytesseract==0.3.10
 python-dateutil==2.8.2
+python-dotenv==1.0.0
 pytz==2023.3
 razorpay==1.4.1
 reportlab==4.0.0
@@ -50,4 +52,5 @@ typing_extensions==4.8.0
 tzdata==2023.3
 tzlocal==5.0.1
 urllib3==1.26.17
+whitenoise==6.6.0
 yarl==1.9.2
